@@ -1,3 +1,7 @@
+/// <summary>
+/// 输入模块
+/// 处理玩家的输入
+/// </summary>
 public class GameSceneModuleInput : IModule
 {
     public GameSceneModuleInput(GameState gameState) : base(gameState)
@@ -16,6 +20,6 @@ public class GameSceneModuleInput : IModule
 
     public override void Update()
     {
-
+        
     }
 }

@@ -1,3 +1,5 @@
+using System;
+
 public abstract class IModule
 {
     protected GameState gameState;
