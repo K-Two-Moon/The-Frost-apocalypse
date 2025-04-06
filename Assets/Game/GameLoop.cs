@@ -8,6 +8,7 @@ public class GameLoop : SingletonMono<GameLoop>
 
     void Start()
     {
+
         // 设置帧率
         Application.targetFrameRate = 60;
 
@@ -19,6 +20,7 @@ public class GameLoop : SingletonMono<GameLoop>
         //场景管理初始化
         m_SceneStateController = new SceneStateController();
         m_SceneStateController.Initialize();
+        
 
         JKLog.Succeed("启动成功");
     }
