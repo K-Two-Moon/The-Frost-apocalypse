@@ -20,14 +20,15 @@ public abstract class IGameObject
 
     public bool Active => active;
 
-    public IGameObject(string naem)
+    public IGameObject()
     {
-        this.name = naem;
+        name = GetType().Name;
     }
 
-    public virtual void InitializeData()
+    public virtual void Initialize()
     {
         active = true;
+        obj?.SetActive(true);
     }
 
     public virtual void Destroy()
@@ -43,7 +44,9 @@ public abstract class IGameObject
         //在World中移除id
         World.Instance.AddToDestoryObjectBuffer(id);
         componentList.Clear();
-        Object.Destroy(obj);
+        //Object.Destroy(obj);
+        obj.SetActive(false);
+        PoolSystem.PushObject(this);
     }
 
     /// <summary>
@@ -51,8 +54,8 @@ public abstract class IGameObject
     /// </summary>
     public virtual void Create()
     {
-        obj.name = name;
         World.Instance.AddObject(this);
+        obj.name = name + "_" + id.ToString();
         OnCreate();
     }
 
