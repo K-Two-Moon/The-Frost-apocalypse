@@ -28,14 +28,19 @@ public abstract class IGameObject
     public virtual void Initialize()
     {
         active = true;
+        componentList.Clear();
         obj?.SetActive(true);
     }
 
-    public virtual void Destroy()
+    /// <summary>
+    /// 主要作用为卸载组件，以及对象池回收
+    /// </summary>
+    /// <param name="isRecycle">是否回收到对象池,默认不回收</param>
+    public virtual void Destroy(bool isRecycle = false)
     {
         active = false;
 
-        //销毁组件
+        //卸载组件
         for (int i = 0; i < componentList.Count; i++)
         {
             IComponent component = componentList[i];
@@ -43,10 +48,13 @@ public abstract class IGameObject
         }
         //在World中移除id
         World.Instance.AddToDestoryObjectBuffer(id);
-        componentList.Clear();
-        //Object.Destroy(obj);
-        obj.SetActive(false);
-        PoolSystem.PushObject(this);
+
+        if (isRecycle)
+        {
+            obj?.SetActive(false);
+            PoolSystem.PushObject(this);
+        }
+        else Object.Destroy(obj);
     }
 
     /// <summary>

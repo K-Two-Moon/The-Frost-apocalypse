@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// 命令模块
@@ -52,5 +53,30 @@ public class GameSceneModuleCommand : IModule
             if (command is IUndoable undoable)
                 commandHistory.Push(command);
         }
+    }
+
+    // 输入相关命令
+    public class MoveCommand : ICommand
+    {
+        private Vector2 moveInput;
+        public MoveCommand(Vector2 moveInput) => this.moveInput = moveInput;
+        public void Execute() => Debug.Log($"Move command executed: {moveInput}");
+    }
+
+    public class JumpCommand : ICommand
+    {
+        public void Execute() => Debug.Log("Jump command executed");
+    }
+
+    public class MenuCommand : ICommand
+    {
+        public void Execute() => Debug.Log("Menu command executed");
+    }
+
+    public class MouseClickCommand : ICommand
+    {
+        private int button;
+        public MouseClickCommand(int button) => this.button = button;
+        public void Execute() => Debug.Log($"Mouse click command executed: button {button}");
     }
 }
