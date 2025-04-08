@@ -4,7 +4,7 @@ public abstract class Object3D : IGameObject
 {
     protected static Transform parent;
 
-    public Object3D(string name) : base(name)
+    public Object3D()
     {
         if (parent == null)
         {
@@ -20,6 +20,5 @@ public abstract class Object3D : IGameObject
     public override void Create()
     {
         base.Create();
-        obj.name = Id.ToString();
     }
 }

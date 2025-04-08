@@ -8,7 +8,6 @@ public class GameLoop : SingletonMono<GameLoop>
 
     void Start()
     {
-
         // 设置帧率
         Application.targetFrameRate = 60;
 
@@ -23,6 +22,8 @@ public class GameLoop : SingletonMono<GameLoop>
         
 
         JKLog.Succeed("启动成功");
+        GameObject dragmanager = new GameObject("DragManager");
+        dragmanager.AddComponent<DragManager>();
     }
 
 

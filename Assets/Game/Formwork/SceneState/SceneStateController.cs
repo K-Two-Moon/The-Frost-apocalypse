@@ -40,7 +40,7 @@ public class SceneStateController
             { SceneStateEnum.GameOver, new GameOverState(this) }
         };
 
-        ChangeState(SceneStateEnum.Menu);
+        ChangeState(SceneStateEnum.Game);
     }
 
     // 更改当前场景状态

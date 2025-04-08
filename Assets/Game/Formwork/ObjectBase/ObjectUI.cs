@@ -4,7 +4,7 @@ public abstract class ObjectUI : IGameObject
 {
     protected static Transform cavansTransform;
 
-    public ObjectUI(string name) : base(name)
+    public ObjectUI() 
     {
         if (cavansTransform == null)
         {

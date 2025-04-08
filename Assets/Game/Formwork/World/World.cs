@@ -37,9 +37,12 @@ public partial class World : Singleton<World>
 
     public void AddObject(IGameObject obj)
     {
-        allObjectDict.Add(nextId, obj);
-        obj.SetId(nextId);
-        nextId++;
+        if (allObjectDict.ContainsKey(obj.Id))
+        {
+            allObjectDict.Add(nextId, obj);
+            obj.SetId(nextId);
+            nextId++;
+        }
     }
 
     void RemoveObject(uint id)
@@ -89,7 +92,7 @@ public partial class World : Singleton<World>
                 obj.Update();
             }
         }
-        
+
         //销毁缓存中的对象
         if (destroyQueue.Count > 0)
         {

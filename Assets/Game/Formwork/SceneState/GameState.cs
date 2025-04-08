@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class GameState : ISceneState
 {
+    public IModule eventModule;
+    public IModule commandModule;
+    public IModule inputModule;
+    public IModule objectModule;
     public GameState(SceneStateController controller) : base(controller)
     {
         sceneName = SceneStateEnum.Game.ToString();
@@ -12,7 +16,15 @@ public class GameState : ISceneState
     {
         base.Enter();
         //添加模块，模块的添加顺序决定了模块的更新顺序
-        //facade.AddModule();
+        eventModule = new GameSceneModuleEvent(this);
+        commandModule = new GameSceneModuleCommand(this);
+        inputModule = new GameSceneModuleInput(this);
+        objectModule = new GameSceneModuleObject(this);
+
+        facade.AddModule(eventModule);
+        facade.AddModule(commandModule);
+        facade.AddModule(inputModule);
+        facade.AddModule(objectModule);
     }
 
     public override void Exit()
