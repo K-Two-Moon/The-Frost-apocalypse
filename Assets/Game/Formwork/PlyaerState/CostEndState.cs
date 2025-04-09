@@ -34,6 +34,7 @@ public class CostEndState : PlayerState
         MessAgeController<int>.Instance.SendMessAge(1001, 0);
         MessAgeController<int>.Instance.SendMessAge(1003, 0);
         base.Enter();
+        Camera.main.transform.position= new Vector3(0, 30, -36);
     }
 
     public override void Exit()

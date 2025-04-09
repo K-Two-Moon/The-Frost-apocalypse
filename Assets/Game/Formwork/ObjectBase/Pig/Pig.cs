@@ -11,6 +11,7 @@ public class Pig : Object3D
         if (obj == null)
         {
             obj = GameObject.Instantiate(Resources.Load<GameObject>("pig"));
+            obj.transform.SetParent(parent);
             obj.transform.position = new Vector3(-45 ,0, 15);
            
         }
@@ -20,7 +21,7 @@ public class Pig : Object3D
     public override void Destroy(bool isRecycle = false)
     {
         base.Destroy(isRecycle);
-        Destroy(Hp.gameObject);
+        //Destroy(Hp.gameObject);
     }
 
     public override void Initialize()
