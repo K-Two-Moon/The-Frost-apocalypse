@@ -23,10 +23,10 @@ public class GameSceneModuleInput : IModule
 
     public override void Update()
     {
-        (gameState.objectModule as GameSceneModuleObject).player.Update();
-        if((gameState.objectModule as GameSceneModuleObject).AtkRound!=null)
-        {
-            (gameState.objectModule as GameSceneModuleObject).AtkRound.Update();
-        }      
+        //(gameState.objectModule as GameSceneModuleObject).player.Update();
+        //if((gameState.objectModule as GameSceneModuleObject).AtkRound!=null)
+        //{
+        //    (gameState.objectModule as GameSceneModuleObject).AtkRound.Update();
+        //}      
     }
 }

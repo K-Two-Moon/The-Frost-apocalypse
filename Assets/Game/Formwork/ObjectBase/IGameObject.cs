@@ -51,8 +51,8 @@ public abstract class IGameObject
 
         if (isRecycle)
         {
-            obj?.SetActive(false);
-            PoolSystem.PushObject(this);
+            //obj?.SetActive(false);
+            //PoolSystem.PushObject(this);
         }
         else Object.Destroy(obj);
     }

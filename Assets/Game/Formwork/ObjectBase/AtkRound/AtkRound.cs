@@ -20,6 +20,7 @@ public class AtkRound :Object3D
     public int segments = 30;
    Dictionary<Vector3,Pig> pigs= new Dictionary<Vector3,Pig>();
     Dictionary<Vector3,Pig> choisedPigs= new Dictionary<Vector3,Pig>();
+    bool isCastFinsh=false;
     public AtkRound()
     {
         MessAgeController<Transform>.Instance.AddLister(1012, SetCostTrs);
@@ -47,19 +48,22 @@ public class AtkRound :Object3D
     }
     public override void Destroy(bool isRecycle = false)
     {
+        GameObject.Destroy(lineRenderer.gameObject);
+        GameObject.Destroy(Ballistic);
         base.Destroy(isRecycle);
-        Destroy(lineRenderer.gameObject);
-        Destroy(Ballistic.gameObject);
+        
     }
 
     public void Openatk(int n)
     {
         obj.SetActive(true);    
         obj.transform.position = new Vector3(-10,0,20);
-        Count = 3;  
+        Count = 3;
+        isCastFinsh=false;
     }
     public override void Initialize()
     {
+        base.Initialize();
         MessAgeController<int>.Instance.SendMessAge(1013,0);
         MessAgeController<int>.Instance.SendMessAge(1006, 0);
         MessAgeController<int>.Instance.SendMessAge(1011, 0);
@@ -89,6 +93,7 @@ public class AtkRound :Object3D
     }
     public override void Update()
     {
+        base.Update();
         pointB = obj.transform;
         if (obj != null)
         {
@@ -105,7 +110,11 @@ public class AtkRound :Object3D
                 }
                 else
                 {
-                    item.Value.Obj.transform.Find("WolfBossmon_body").GetComponent<SkinnedMeshRenderer>().material.color = Color.white;
+                    if(item.Value!=null)
+                    {
+                        item.Value.Obj.transform.Find("WolfBossmon_body").GetComponent<SkinnedMeshRenderer>().material.color = Color.white;
+                    }
+                    
                 }
             }
             if (Input.GetMouseButtonDown(0))
@@ -163,11 +172,14 @@ public class AtkRound :Object3D
                     }
                     choisedPigs.Clear();
                     Count--;
-                    if (Count == 0)
+                    if (Count <= 0)
                     {
-                        MessAgeController<int>.Instance.SendMessAge(1019, 0);
-                        MessAgeController<int>.Instance.SendMessAge(1017, 0);
-                       
+                        if(!isCastFinsh)
+                        {
+                            MessAgeController<int>.Instance.SendMessAge(1020, 0);
+                            MessAgeController<int>.Instance.SendMessAge(1021, 0);
+                            isCastFinsh = true;                            
+                        }                      
                     }
                 }
             }

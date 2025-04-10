@@ -15,7 +15,7 @@ public class CastState : PlayerState
     {
         MessAgeController<GameObject>.Instance.AddLister(1006, SetAtkRound);
        MessAgeController<Rokcer>.Instance.AddLister(1002, SetRocker);
-       MessAgeController<int>.Instance.AddLister(1017, ChangeState);
+       MessAgeController<int>.Instance.AddLister(1021, ChangeState);
     }
 
     private void ChangeState(int n)

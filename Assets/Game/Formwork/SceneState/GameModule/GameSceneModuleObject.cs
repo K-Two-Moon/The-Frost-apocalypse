@@ -15,6 +15,11 @@ public class GameSceneModuleObject : IModule
     public AtkRound AtkRound;
 
     public Dictionary <Vector3,Pig> Pigs = new Dictionary<Vector3,Pig>();
+    List<Meat> meats = new List<Meat>();
+    List<Meat> meatschi= new List<Meat>();
+    List<Mesh> DeskMeat=new List<Mesh>();
+    
+    
 
     bool isCreatPig=false;
 
@@ -26,21 +31,26 @@ public class GameSceneModuleObject : IModule
          MessAgeController<int>.Instance.AddLister(1011, GetCastprefab);
         MessAgeController<int>.Instance.AddLister(1007, Getpig);
         MessAgeController<Dictionary<Vector3,Pig>>.Instance.AddLister(1018, DestroyPigs);
-        MessAgeController<int>.Instance.AddLister(1019, DestoryatkRound);
+        MessAgeController<int>.Instance.AddLister(1020, DestoryatkRound);
     }
 
     public void DestoryatkRound(int n)
     {
         AtkRound.Destroy();
         AtkRound = null;
+
     }
     private void DestroyPigs(Dictionary<Vector3,Pig> @object)
     {
         foreach (var item in @object)
         {
             choisepigs.Add(item.Key, item.Value);
-            Pigs[item.Key]=null;
-            item.Value.Destroy();          
+            Meat meat = new Meat();
+            meat.Initialize();
+            meat.Create();
+            meat.Obj.transform.position=item.Key+new Vector3(Random.Range(-3,3),0,Random.Range(-3,3));
+            item.Value.Destroy();
+            Pigs[item.Key]=null;                   
         }   
         isCreatPig=true;
          MessAgeController<Dictionary<Vector3,Pig>>.Instance.SendMessAge(1014, Pigs);
@@ -76,6 +86,7 @@ public class GameSceneModuleObject : IModule
 
     public override void Initialize()
     {
+        base.Initialize();
         castPrefab=new CastPrefab();
         castPrefab.Initialize();
         castPrefab.Create();
@@ -121,6 +132,7 @@ public class GameSceneModuleObject : IModule
     Dictionary<Vector3,Pig> choisepigs=new Dictionary<Vector3, Pig>();
     private void CreatDestoryPig()
     {
+        int count=choisepigs.Count;
         foreach (var item in choisepigs)
         {
             Pig pig = new Pig();
@@ -130,7 +142,18 @@ public class GameSceneModuleObject : IModule
             Pigs[item.Key] = pig;
         }   
         choisepigs.Clear();
+        CreatMeat(count);
     }
+
+    private void CreatMeat(int count)
+    {
+        int MeatCount = count * 5;
+        for(int i=0;i< MeatCount; i++)
+        {
+
+        }
+    }
+
     float timer=0;
     public override void Update()
     {

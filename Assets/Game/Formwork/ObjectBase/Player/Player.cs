@@ -38,8 +38,11 @@ public class Player : Object3D
 
     }
 
+
     public override void Update()
     {
         stateController.Update();
+        base.Update();
+        
     }
 }
