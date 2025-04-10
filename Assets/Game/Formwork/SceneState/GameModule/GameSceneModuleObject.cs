@@ -45,10 +45,11 @@ public class GameSceneModuleObject : IModule
         foreach (var item in @object)
         {
             choisepigs.Add(item.Key, item.Value);
-            Meat meat = new Meat();
-            meat.Initialize();
-            meat.Create();
-            meat.Obj.transform.position=item.Key+new Vector3(Random.Range(-3,3),0,Random.Range(-3,3));
+            //Meat meat = new Meat();
+            //meat.Initialize();
+            //meat.Create();
+            //meat.Obj.transform.position=item.Key+new Vector3(Random.Range(-3,3),0,Random.Range(-3,3));
+           
             item.Value.Destroy();
             Pigs[item.Key]=null;                   
         }   
@@ -142,14 +143,18 @@ public class GameSceneModuleObject : IModule
             Pigs[item.Key] = pig;
         }   
         choisepigs.Clear();
-        CreatMeat(count);
+        //CreatMeat(count);
     }
 
-    private void CreatMeat(int count)
+    private void CreatMeat(Vector3 pos)
     {
-        int MeatCount = count * 5;
-        for(int i=0;i< MeatCount; i++)
+        int count = 5;
+        for(int i=0;i< count; i++)
         {
+            Meat meat= new Meat();
+            meat.Initialize();
+            meat.Create();
+            meats.Add(meat);
 
         }
     }

@@ -23,6 +23,7 @@ public class AtkRound :Object3D
     bool isCastFinsh=false;
     public AtkRound()
     {
+        
         MessAgeController<Transform>.Instance.AddLister(1012, SetCostTrs);
         MessAgeController<Dictionary<Vector3,Pig>> .Instance.AddLister(1014, SetPigs);
         MessAgeController<int>.Instance.AddLister(1015, Openatk);
@@ -123,7 +124,7 @@ public class AtkRound :Object3D
                 {
                     obj.SetActive(true);
                     obj.transform.position = new Vector3(-10, 0, 20);
-                    lineRenderer.gameObject.SetActive(false);
+                    lineRenderer.gameObject.SetActive(true);
                 }
             }
             if (Input.GetMouseButtonUp(0))
