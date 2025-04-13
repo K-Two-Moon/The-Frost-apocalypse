@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9011155734709586948}
   - component: {fileID: 6551322576093067470}
   m_Layer: 0
-  m_Name: "\u8089"
+  m_Name: meat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

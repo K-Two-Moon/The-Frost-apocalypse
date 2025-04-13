@@ -39,12 +39,13 @@ public class CastState : PlayerState
         
         base.Enter();
         MessAgeController<int>.Instance.SendMessAge(1015, 0);
+         Camera.main.transform.eulerAngles=new Vector3(30,0,0);
     }
 
     public override void Exit()
     {
         base.Exit();
-        Camera.main.transform.position = new Vector3(-0, 30, -36);
+       
     }
 
     public override void Update()

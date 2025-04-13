@@ -87,10 +87,7 @@ public partial class World : Singleton<World>
     {
         foreach (IGameObject obj in allObjectDict.Values)
         {
-            if(obj.Obj.name == "Player_0")
-            {
-                Debug.Log(1);
-            }
+            
             if (obj.Active)
             {
                 obj.Update();

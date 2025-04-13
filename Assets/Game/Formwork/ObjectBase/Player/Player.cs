@@ -43,6 +43,23 @@ public class Player : Object3D
     {
         stateController.Update();
         base.Update();
-        
+        if (obj != null&&!(stateController.m_state is CastState))
+        {
+            // 平滑移动相机到玩家位置的上方和后方
+            Camera.main.transform.position = Vector3.Lerp(
+                Camera.main.transform.position,
+                obj.transform.position + new Vector3(0, 8, -5), // 相机相对玩家的位置
+                Time.deltaTime * 2f
+                ) // 平滑速度
+            ;
+
+            // 平滑旋转相机以始终面向玩家
+            Quaternion targetRotation = Quaternion.LookRotation(obj.transform.position - Camera.main.transform.position);
+            Camera.main.transform.rotation = Quaternion.Slerp(
+                Camera.main.transform.rotation,
+                targetRotation,
+                Time.deltaTime * 2 // 平滑旋转速度
+            );
+        }
     }
 }

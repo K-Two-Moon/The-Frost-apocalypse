@@ -20,12 +20,16 @@ public enum PlayerStateEnum
     /// <summary>
     PutMeahOn,
     ///投射结束
-    CastEnd
+    CastEnd,
+    //拿熟肉
+    GatherCookerMeat,
+    //卖肉
+    BuyMeat
 }
 public class PlayerStateController
 {
     // 当前场景状态
-    private PlayerState m_state;
+    public PlayerState m_state;
 
     // 存储场景状态的字典
     private Dictionary<PlayerStateEnum, PlayerState> stateDict;
@@ -42,7 +46,9 @@ public class PlayerStateController
             { PlayerStateEnum.Cast, new CastState(this) },
             { PlayerStateEnum.GatherMeat, new GatherMeatState(this) },
             {PlayerStateEnum.PutMeahOn,new PutMeatOnState(this)},
-             {PlayerStateEnum.CastEnd,new CostEndState(this)}
+             {PlayerStateEnum.CastEnd,new CostEndState(this)},
+              { PlayerStateEnum.GatherCookerMeat, new GatherCookerMeat(this) },
+            
         };
 
         ChangeState(PlayerStateEnum.Move);
