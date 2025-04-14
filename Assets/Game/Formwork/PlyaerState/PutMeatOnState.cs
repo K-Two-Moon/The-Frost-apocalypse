@@ -7,7 +7,7 @@ public class PutMeatOnState : PlayerState
     GameObject player;
     Transform Meatdesk;
     Rokcer rocker;
-    float timer = 0.2f;
+    float timer = 1f;
     public PutMeatOnState(PlayerStateController controller) : base(controller)
     {
        MessAgeController<Rokcer>.Instance.AddLister(1002, SetRolcler);
@@ -61,7 +61,7 @@ public class PutMeatOnState : PlayerState
             timer-=Time.deltaTime;
             if(timer<=0)
             {
-                timer = 0.2f;
+                timer = 1f;
                 MessAgeController<int>.Instance.SendMessAge(1040, 0);
             }
            

@@ -1,4 +1,5 @@
 using JKFrame;
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -25,6 +26,8 @@ public class GameSceneModuleObject : IModule
 
     public CastPos DeskCookerMeatPos;
 
+    public CastPos BusyPos;
+
     public Dictionary <Vector3,Pig> Pigs = new Dictionary<Vector3,Pig>();
     List<PigMeat> meats = new List<PigMeat>();
     Stack<PigMeat> meatschi = new Stack<PigMeat>();
@@ -32,6 +35,7 @@ public class GameSceneModuleObject : IModule
     Stack<PigMeat> DeskMeat=new Stack<PigMeat>();
     Stack<PigMeat> CookerMeat=new Stack<PigMeat>();
     
+    Stack<Money>  Moneys=new Stack<Money>();
     
 
     bool isCreatPig=false;
@@ -52,8 +56,12 @@ public class GameSceneModuleObject : IModule
         MessAgeController<int>.Instance.AddLister(1034,SetDeskCookerMeatPos);
         MessAgeController<int>.Instance.AddLister(1040, AddDeskMeat);
         MessAgeController<PigMeat>.Instance.AddLister(1042, AddCookerMeat);
+        MessAgeController<int>.Instance.AddLister(1050,SeyBusypos);
     }
-
+    private void SeyBusypos(int n)
+    {
+        MessAgeController<Transform>.Instance.SendMessAge(1051,BusyPos.Obj.transform);
+    }
     private void AddCookerMeat(PigMeat meat)
     {
         meat.Obj.transform.parent = player.Obj.transform;
@@ -90,9 +98,7 @@ public class GameSceneModuleObject : IModule
     {   
         if(meatschi.Count>0)
         {
-                meatschi.Peek().Obj.transform.parent=player.Obj.transform;
-                meatschi.Peek().Obj.transform.localPosition=new Vector3(0,0,-1)+new Vector3(0,0.2f,0)*MyMeats.Count;
-                MyMeats.Push(meatschi.Pop());
+               
         }           
     }
     public void GetMeatPool(int n)
@@ -183,7 +189,10 @@ public class GameSceneModuleObject : IModule
         DeskCookerMeatPos.Create();
         DeskCookerMeatPos.Obj.transform.position = new Vector3(-9,0,-11);
 
-
+        BusyPos=new CastPos();
+        BusyPos.Initialize();
+        BusyPos.Create();
+        BusyPos.Obj.transform.position = new Vector3(-6.5f,0,-14);
 
         rokcer = new Rokcer();
         rokcer.Initialize();
@@ -261,6 +270,24 @@ public class GameSceneModuleObject : IModule
                 CreatDestoryPig();          
             }
        }
-      
+        switch(player.stateController.m_state)
+        {        
+            case GatherMeatState:
+            if(meatschi.Count>0)
+            {
+                Vector3 endpos=new Vector3(0,0,-1)+new Vector3(0,0.2f,0)*MyMeats.Count+player.Obj.transform.position;
+                meatschi.Peek().Obj.transform.position=Vector3.Lerp(meatschi.Peek().Obj.transform.position,endpos,Time.deltaTime*5);
+                if(Vector3.Distance(meatschi.Peek().Obj.transform.position,endpos)<=0.01f)
+                {
+                    meatschi.Peek().Obj.transform.parent=player.Obj.transform;
+                    meatschi.Peek().Obj.transform.localPosition=new Vector3(0,0,-1)+new Vector3(0,0.2f,0)*MyMeats.Count;    
+                    MyMeats.Push(meatschi.Pop());             
+                }   
+            }                          
+            ;break; 
+            case BuyMeat:
+
+            ;break;   
+        }
     }
 }

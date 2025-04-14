@@ -1,15 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Desk : Object3D
 {
     public Transform Meatpool;
+    public Transform cookering;
     public Transform CookedMeat;
     Stack<PigMeat> meatpool=new Stack<PigMeat>();
     Stack<PigMeat> cookedmeat=new Stack<PigMeat>();
-    float timer=0.5f;
+    float timer=0f;
+    PigMeat setdesk;
+    PigMeat cookingmeat;
+    PigMeat gathermeat;
     public Desk()
     {       
         MessAgeController<PigMeat>.Instance.AddLister(1035, AddMeatPool);
@@ -33,6 +38,7 @@ public class Desk : Object3D
             obj.transform.position=new Vector3(-12,0.7f,-9);
             Meatpool=obj.transform.Find("MeatPool");
             CookedMeat=obj.transform.Find("CookedMeatPool");
+            cookering=obj.transform.Find("cooking");
         }
         base.Create();
     }
@@ -52,16 +58,54 @@ public class Desk : Object3D
     public override void Update()
     {
         base.Update();
-        if(meatpool.Count>0)
+        if(setdesk!=null)
         {
-            timer-=Time.deltaTime;
-            if(timer<=0)
+            setdesk.Obj.transform.position=Vector3.Lerp(setdesk.Obj.transform.position,Meatpool.position+new Vector3(0,0.2f,0)*meatpool.Count,Time.deltaTime*20);
+            if(Vector3.Distance(setdesk.Obj.transform.position,Meatpool.position+new Vector3(0,0.2f,0)*meatpool.Count)<=0.1f)
             {
-                timer=0.5f;
-                AddCooker(meatpool.Pop());
+                setdesk.Obj.transform.parent=Meatpool;
+                setdesk.Obj.transform.localPosition=new Vector3(0,0.2f,0)*meatpool.Count;
+                meatpool.Push(setdesk);
+                setdesk=null;
+                if(cookingmeat==null)
+                {
+                    cookingmeat=meatpool.Pop();
+                }
             }
         }
-       
+        if(cookingmeat==null)
+        {
+            if(meatpool.Count>0)
+            {
+                cookingmeat=meatpool.Pop();
+            }        
+        }
+        if(cookingmeat!=null)
+        {
+            cookingmeat.Obj.transform.position=Vector3.Lerp(cookingmeat.Obj.transform.position,cookering.transform.position+new Vector3(0,0.2f,0),Time.deltaTime*20);
+            if(Vector3.Distance(cookingmeat.Obj.transform.position,cookering.transform.position+new Vector3(0,0.2f,0))<0.1f)
+            {
+                cookingmeat.Obj.transform.parent=null;
+                timer+=Time.deltaTime;
+                if(timer>=2)
+                {
+                    timer=0;
+                    gathermeat=cookingmeat;
+                    cookingmeat=null;
+                }
+            }         
+        }
+        if(gathermeat!=null)
+        {
+            gathermeat.Obj.transform.position=Vector3.Lerp(gathermeat.Obj.transform.position,CookedMeat.transform.position+new Vector3(0,0.2f,0)*cookedmeat.Count,Time.deltaTime*20);
+            if(Vector3.Distance(gathermeat.Obj.transform.position,CookedMeat.transform.position+new Vector3(0,0.2f,0)*cookedmeat.Count)<0.1f)
+            {
+                gathermeat.Obj.transform.parent=CookedMeat;
+                gathermeat.Obj.transform.localPosition=new Vector3(0,0.2f,0)*cookedmeat.Count;
+                cookedmeat.Push(gathermeat);
+                gathermeat=null;
+            }  
+        }
     }
 
     protected override void OnCreate()
@@ -71,15 +115,8 @@ public class Desk : Object3D
 
     public void AddMeatPool(PigMeat meat)
     {
-        meat.Obj.transform.parent=Meatpool;
-        meat.Obj.transform.localPosition=new Vector3(0,0.2f,0)*meatpool.Count;
-        meatpool.Push(meat);
+        setdesk=meat;      
     }
 
-    public void AddCooker(PigMeat meat)
-    {
-        meat.Obj.transform.parent=CookedMeat;
-        meat.Obj.transform.localPosition=new Vector3(0,0.2f,0)*cookedmeat.Count;
-        cookedmeat.Push(meat);
-    }
+    
 }

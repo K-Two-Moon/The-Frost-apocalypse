@@ -512,7 +512,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4694269728638357098}
   m_Layer: 0
-  m_Name: "\u7F8E\u5143"
+  m_Name: money
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
