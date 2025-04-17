@@ -22,6 +22,7 @@ public class GameState : ISceneState
         objectModule = new GameSceneModuleObject(this);
 
         facade.AddModule(eventModule);
+        facade.AddModule(commandModule);
         facade.AddModule(inputModule);
         facade.AddModule(objectModule);
     }

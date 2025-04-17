@@ -19,8 +19,11 @@ public class GameLoop : SingletonMono<GameLoop>
         //场景管理初始化
         m_SceneStateController = new SceneStateController();
         m_SceneStateController.Initialize();
+        
 
         JKLog.Succeed("启动成功");
+        GameObject dragmanager = new GameObject("DragManager");
+        dragmanager.AddComponent<DragManager>();
     }
 
 

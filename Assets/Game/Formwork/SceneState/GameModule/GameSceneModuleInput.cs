@@ -1,3 +1,6 @@
+using UnityEngine;
+using UnityEngine.Playables;
+
 /// <summary>
 /// 输入模块
 /// 处理玩家的输入
@@ -15,11 +18,15 @@ public class GameSceneModuleInput : IModule
 
     public override void Initialize()
     {
-
+        
     }
 
     public override void Update()
     {
-        
+        //(gameState.objectModule as GameSceneModuleObject).player.Update();
+        //if((gameState.objectModule as GameSceneModuleObject).AtkRound!=null)
+        //{
+        //    (gameState.objectModule as GameSceneModuleObject).AtkRound.Update();
+        //}      
     }
 }

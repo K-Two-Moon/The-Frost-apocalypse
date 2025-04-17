@@ -37,11 +37,11 @@ public partial class World : Singleton<World>
 
     public void AddObject(IGameObject obj)
     {
-        if (allObjectDict.ContainsKey(obj.Id))
+        if (!allObjectDict.ContainsKey(obj.Id))
         {
+            nextId++;
             allObjectDict.Add(nextId, obj);
             obj.SetId(nextId);
-            nextId++;
         }
     }
 
@@ -87,6 +87,7 @@ public partial class World : Singleton<World>
     {
         foreach (IGameObject obj in allObjectDict.Values)
         {
+            
             if (obj.Active)
             {
                 obj.Update();

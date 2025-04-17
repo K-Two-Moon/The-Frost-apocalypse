@@ -7,8 +7,10 @@ using JKFrame;
 /// </summary>
 public class GameSceneModuleEvent : IModule
 {
+
     public GameSceneModuleEvent(GameState gameState) : base(gameState)
     {
+
     }
 
 

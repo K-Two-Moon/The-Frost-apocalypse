@@ -30,7 +30,7 @@ public abstract class IGameObject
         active = true;
         componentList.Clear();
         obj?.SetActive(true);
-    }
+  }
 
     /// <summary>
     /// 主要作用为卸载组件，以及对象池回收
@@ -51,8 +51,8 @@ public abstract class IGameObject
 
         if (isRecycle)
         {
-            obj?.SetActive(false);
-            PoolSystem.PushObject(this);
+            //obj?.SetActive(false);
+            //PoolSystem.PushObject(this);
         }
         else Object.Destroy(obj);
     }
